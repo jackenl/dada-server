@@ -1,15 +1,13 @@
-var router = require('koa-router')();
+const Router = require('koa-router');
 
-router.get('/', function *(next) {
-  yield this.render('index', {
-    title: 'Hello World Koa!'
-  });
+const router = new Router();
+
+router.get('/', (ctx, next) => {
+  ctx.send('Hello World Koa!');
 });
 
-router.get('/foo', function *(next) {
-  yield this.render('index', {
-    title: 'Hello World foo!'
-  });
+router.get('/error', (ctx, next) => {
+  ctx.sendError(401, '请求失败');
 });
 
 module.exports = router;
