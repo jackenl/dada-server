@@ -7,7 +7,7 @@ router.get('/', (ctx, next) => {
 });
 
 router.get('/error', (ctx, next) => {
-  ctx.sendError(401, '请求失败');
+  ctx.throw(400, 'name required');
 });
 
 module.exports = router;
