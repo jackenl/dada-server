@@ -13,6 +13,9 @@ const cors = require('./middlewares/cors');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+const travel = require('./routes/travel');
+const sport = require('./routes/sport');
+const nearby = require('./routes/nearby');
 
 // error handler
 app.use(error());
@@ -29,7 +32,7 @@ app.use(json());
 app.use(logger());
 
 // jwt verify
-const whitelist = [/^\/public/, /\/login/, /\/register/];
+const whitelist = [/^\/public/, /\/login/, /\/register/, /\/nearby/];
 app.use(
   KoaJwt({
     secret: config.jwt.secret,
@@ -45,6 +48,9 @@ app.use(require('koa-static')(__dirname + '/public'));
 // routes definition
 app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
+app.use(travel.routes(), travel.allowedMethods());
+app.use(sport.routes(), sport.allowedMethods());
+app.use(nearby.routes(), nearby.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {

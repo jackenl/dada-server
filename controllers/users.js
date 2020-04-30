@@ -45,7 +45,18 @@ module.exports = {
       sex: formData.sex,
     }
     await userInfoModel.create(values2);
-    ctx.send('注册成功');
+    ctx.send();
+  },
+
+  // 修改密码
+  async updatePassword(ctx) {
+    const formData = ctx.request.body;
+    const opts = {
+      username: formData.username,
+      password: formData.originPass,
+    };
+    const result = await userModel.updatePassword(opts, formData.newPass);
+    ctx.send();
   },
 
   // 获取用户信息
@@ -53,5 +64,12 @@ module.exports = {
     const userId = ctx.state.user.id;
     const result = await userInfoModel.getOneByUserId(userId);
     ctx.send(result);
-  }
+  },
+
+  // 更新用户信息
+  async updateUserInfo(ctx) {
+    const userId = ctx.state.user.id;
+    const result = await userInfoModel.updateInfoByUserId(userId);
+    ctx.send();
+  },
 }

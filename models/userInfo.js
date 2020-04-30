@@ -12,8 +12,7 @@ const UserInfo = {
 
   async getOneByUserId(userId) {
     let result = null;
-    const _sql = 'SELECT * FROM `user_info` WHERE `userId` = ?';
-    const { rows } = await dbUtil.query(_sql, [userId]);
+    const { rows } = await dbUtil.getData('user_info', 'userId', userId);
     if (Array.isArray(rows) && rows.length > 0) {
       result = rows[0];
     }
