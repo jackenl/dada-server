@@ -7,10 +7,6 @@ const config = {
     PASSWORD: 'zj123456',
     DATABASE: 'dada_map',
   },
-  redisDB: {
-    HOST: 'localhost',
-    PORT: '6379',
-  },
   jwt: {
     secret: '507f191e810c19729de860ea',
     options: {

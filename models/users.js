@@ -20,8 +20,7 @@ const Users = {
    */
   async getOneByUsername(username) {
     let result = null;
-    const _sql = 'SELECT * FROM `users` WHERE `username` = ?';
-    const { rows } = await dbUtil.query(_sql, [username]);
+    const { rows } = await dbUtil.getData('users', 'username', username);
     if (Array.isArray(rows) && rows.length > 0) {
       result = rows[0];
     }
@@ -43,12 +42,13 @@ const Users = {
   },
 
   /**
-   * 通过username更新信记录
-   * @param {string} username
+   * 更新用户密码
    * @param {object} options
+   * @param {string} password
    */
-  async updateByUsername(username, options) {
-    const { rows } = await dbUtil.updateData('users', options, 'username', username);
+  async updatePassword(options, password) {
+    const _sql = 'UPDATE `users` SET `password` = ? WHERE `username` = ? AND `password` = ?';
+    const { rows } = await dbUtil.query(_sql, [options.username, options.password], password);
     return rows;
   },
 

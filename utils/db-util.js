@@ -53,6 +53,11 @@ const createTable = function (sql) {
   return query(sql, []);
 };
 
+const getData = function (table, column, value) {
+  const _sql = 'SELECT * FROM ?? WHERE ?? = ?';
+  return query(_sql, [table, column, value]);
+};
+
 const insertData = function (table, values) {
   const _sql = 'INSERT INTO ?? SET ?';
   return query(_sql, [table, values]);
@@ -85,6 +90,7 @@ module.exports = {
   query,
   execute,
   createTable,
+  getData,
   insertData,
   updateData,
   deleteData,
