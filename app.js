@@ -5,11 +5,11 @@ const config = require('./config');
 // middleware import
 const logger = require('koa-logger'),
   json = require('koa-json'),
+  cors = require('@koa/cors'),
   views = require('koa-views');
 const KoaJwt = require('koa-jwt');
 const sendHandle = require('./middlewares/sendHandle');
 const error = require('./middlewares/errorHandle');
-const cors = require('./middlewares/cors');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -30,18 +30,20 @@ app.use(
 app.use(require('koa-bodyparser')());
 app.use(json());
 app.use(logger());
+app.use(cors());
 
 // jwt verify
 const whitelist = [/^\/public/, /\/login/, /\/register/, /\/nearby/];
 app.use(
   KoaJwt({
     secret: config.jwt.secret,
-    cookie: 'token',
+    getToken(ctx) {
+      return ctx.header['x-token'];
+    }
   }).unless({ path: whitelist })
 );
 
 app.use(sendHandle()); // send handler
-app.use(cors()); // cors handler
 
 app.use(require('koa-static')(__dirname + '/public'));
 
