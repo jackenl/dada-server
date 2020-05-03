@@ -9,6 +9,7 @@
     "test": "./node_modules/.bin/mocha"
   },
   "dependencies": {
+    "@koa/cors": "^3.0.0",
     "co": "^4.6.0",
     "debug": "^4.1.1",
     "jade": "~1.11.0",

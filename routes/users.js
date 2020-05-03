@@ -10,7 +10,7 @@ const router = new Router({
 router.post('/register', users.signUp);
 router.post('/login', users.signIn);
 router.post('/updatePassword', users.updatePassword);
-router.get('/getUserInfo', users.getUserInfo);
+router.get('/userInfo', users.getUserInfo);
 router.post('/updateUserInfo', users.updateUserInfo);
 
 module.exports = router;

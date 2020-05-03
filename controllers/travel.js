@@ -46,6 +46,7 @@ module.exports = {
     const { type, distance, city } = formData;
     const values2 = {};
     values2[type] = record[type] + distance;
+    values2.all += distance;
     let cities;
     if (!record.cities) {
       cities = [];
@@ -55,7 +56,7 @@ module.exports = {
         cities.push(city);
       }
     }
-    values2.cities = JSON.stringify(cities);
+    values2.cities = cities;
     await dataModel.updateByUserId(userId, values2);
     ctx.send();
   },

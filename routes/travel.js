@@ -10,6 +10,6 @@ const router = new Router({
 router.post('/insertRecord', travel.insertTravelRecord);
 router.get('/getRecordsByPage', travel.getTravelRecordsByPage);
 router.get('/getRecordById', travel.getTravelReCordById);
-router.get('/getTravelData', travel.getTravelData);
+router.get('/travelData', travel.getTravelData);
 
 module.exports = router;
