@@ -36,9 +36,9 @@ module.exports = {
     }
     const result = await recordModel.create(values1);
 
-    const record = await dataModel.getOneByUserId(userId);
+    let record = await dataModel.getOneByUserId(userId);
     if (!record) {
-      await dataModel.create();
+      await dataModel.create({ userId });
       record = await dataModel.getOneByUserId(userId);
     }
 
@@ -51,7 +51,11 @@ module.exports = {
 
   async getSportData(ctx) {
     const userId = ctx.state.user.id;
-    const result = await dataModel.getOneByUserId(userId);
+    let result = await dataModel.getOneByUserId(userId);
+    if (!result) {
+      await dataModel.create({ userId });
+      result = await dataModel.getOneByUserId(userId);
+    }
     ctx.send(result);
   }
 }

@@ -6,6 +6,9 @@ const SportRecord = {
       id: dbUtil.raw('UUID()'),
     }
     model = Object.assign({}, defaultModel, model);
+    if (model.path) {
+      model.path = JSON.stringify(model.path);
+    }
     const { rows } = await dbUtil.insertData('sport_record', model);
     return rows;
   },
@@ -15,6 +18,7 @@ const SportRecord = {
     const { rows } = await dbUtil.getData('sport_record', 'id', id);
     if (Array.isArray(rows) && rows.length > 0) {
       result = rows[0];
+      result.path = JSON.parse(result.path);
     }
     return result;
   },
