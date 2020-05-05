@@ -29,41 +29,53 @@ module.exports = {
       userId: userId,
       type: formData.type,
       distance: formData.distance,
-      date: formData.date,
       time: formData.time,
-      path: formData.path,
       start: formData.start,
       end: formData.end,
     }
     const result = await recordModel.create(values1);
 
-    const record = await dataModel.getOneByUserId(userId);
+    let record = await dataModel.getOneByUserId(userId);
     if (!record) {
-      await dataModel.create();
+      await dataModel.create({ userId });
       record = await dataModel.getOneByUserId(userId);
     }
 
     const { type, distance, city } = formData;
     const values2 = {};
     values2[type] = record[type] + distance;
-    values2.all += distance;
-    let cities;
-    if (!record.cities) {
-      cities = [];
-    } else {
-      cities = JSON.parse(record.cities);
-      if (cities.indexOf(city) === -1) {
-        cities.push(city);
-      }
-    }
-    values2.cities = cities;
+    record.all += distance;
+    values2.all = record.all;
     await dataModel.updateByUserId(userId, values2);
     ctx.send();
   },
 
   async getTravelData(ctx) {
     const userId = ctx.state.user.id;
-    const result = await dataModel.getOneByUserId(userId);
+    let result = await dataModel.getOneByUserId(userId);
+    if (!result) {
+      await dataModel.create({
+        userId: userId,
+      });
+      result = await dataModel.getOneByUserId(userId);
+    }
     ctx.send(result);
+  },
+
+  async insertTravelCity(ctx) {
+    const userId = ctx.state.user.id;
+    const formData = ctx.request.body;
+    let record = await dataModel.getOneByUserId(userId);
+    if (!record) {
+      await dataModel.create({
+        userId: userId,
+      });
+      record = await dataModel.getOneByUserId(userId);
+    }
+    if (record.cities.indexOf(formData.city) === -1) {
+      record.cities.push(formData.city);
+    }
+    await dataModel.updateByUserId(userId, { cities: record.cities })
+    ctx.send();
   }
 }

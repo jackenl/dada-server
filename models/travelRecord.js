@@ -6,6 +6,12 @@ const TravelRecord = {
       id: dbUtil.raw('UUID()'),
     }
     model = Object.assign({}, defaultModel, model);
+    if (model.start) {
+      model.start = model.start.toString()
+    }
+    if (model.end) {
+      model.end = model.end.toString()
+    }
     const { rows } = await dbUtil.insertData('travel_record', model);
     return rows;
   },
@@ -15,6 +21,8 @@ const TravelRecord = {
     const { rows } = await dbUtil.getData('travel_record', 'id', id);
     if (Array.isArray(rows) && rows.length > 0) {
       result = rows[0];
+      result.start = result.start.split(',');
+      result.end = result.end.split(',');
     }
     return result;
   },

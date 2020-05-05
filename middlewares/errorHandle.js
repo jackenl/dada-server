@@ -4,7 +4,7 @@ const error = (callback) => {
       await next();
       if (ctx.response.status === 404 && !ctx.response.body) ctx.throw(404);
     } catch (err) {
-      ctx.status = typeof err.status === 'number' ? err.status : 500;
+      // ctx.status = typeof err.status === 'number' ? err.status : 500;
 
       // application
       ctx.app.emit('error', err, ctx);
@@ -14,7 +14,7 @@ const error = (callback) => {
       } else {
         ctx.set('Content-Type', 'application/json');
         ctx.body = {
-          code: ctx.status,
+          code: err.status,
           succeed: false,
           data: null,
           msg: err.message || 'not found',

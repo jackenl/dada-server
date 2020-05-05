@@ -12,7 +12,7 @@ const SportData = {
 
   async getOneByUserId(userId) {
     let result = null;
-    const { rows } = dbUtil.getData('sport_data', 'userId', userId);
+    const { rows } = await dbUtil.getData('sport_data', 'userId', userId);
     if (Array.isArray(rows) && rows.length > 0) {
       result = rows[0];
     }
