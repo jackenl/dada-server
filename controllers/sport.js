@@ -45,6 +45,8 @@ module.exports = {
     const { type, distance } = formData;
     const values2 = {};
     values2[type] = record[type] + distance;
+    record.all += distance;
+    values2.all = record.all;
     await dataModel.updateByUserId(userId, values2);
     ctx.send();
   },

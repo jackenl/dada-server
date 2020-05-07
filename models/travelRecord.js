@@ -35,12 +35,12 @@ const TravelRecord = {
     options = Object.assign({}, defaultOpts, options);
     const limit = options.pageSize;
     const offset = (options.page - 1) * options.pageSize;
-    const _sql1 = 'SELECT * FROM `travel_record` WHERE `userId` = ? ORDER BY create_time LIMIT ? OFFSET ?';
+    const _sql1 = 'SELECT * FROM `travel_record` WHERE `userId` = ? ORDER BY `create_time` LIMIT ? OFFSET ?';
     const { rows } = await dbUtil.query(_sql1, [options.userId, limit, offset]);
     let total = 0;
     const _sql2 = 'SELECT COUNT(*) AS total FROM `travel_record` WHERE `userId` = ?';
     const result = await dbUtil.query(_sql2, [options.userId]);
-    total = result.rows.total;
+    total = result.rows[0].total;
     return {
       pageSize: options.pageSize,
       page: options.page,
