@@ -41,7 +41,7 @@ module.exports = {
       record = await dataModel.getOneByUserId(userId);
     }
 
-    const { type, distance, city } = formData;
+    const { type, distance } = formData;
     const values2 = {};
     values2[type] = record[type] + distance;
     record.all += distance;
