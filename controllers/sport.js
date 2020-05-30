@@ -27,11 +27,11 @@ module.exports = {
     const formData = ctx.request.body;
     const values1 = {
       userId: userId,
-      sportType: formData.sportType,
+      type: formData.type,
       path: formData.path,
-      date: formData.date,
+      distance: formData.distance,
       time: formData.time,
-      speed: formData.time,
+      speed: formData.speed,
       calories: formData.calories,
     }
     const result = await recordModel.create(values1);

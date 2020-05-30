@@ -11,7 +11,7 @@ module.exports = {
     const formData = ctx.request.body;
     if (!formData.username || !formData.password) ctx.throw(400, 'missing required params');
 
-    const result = await userModel.getOneByUsernameAndPassword(formData)
+    const result = await userModel.getOneByUsernameAndPassword(formData);
     if (!result) ctx.throw(403, '用户不存在或密码错误');
 
     const token = jwt.sign(
@@ -29,7 +29,7 @@ module.exports = {
       return ctx.throw(400, 'missing required params');
     }
 
-    const result = userModel.getOneByUsername(formData.username);
+    const result = await userModel.getOneByUsername(formData.username);
     if (result) return ctx.throw(403, '该账号已注册');
 
     const values1 = {
@@ -38,7 +38,7 @@ module.exports = {
     }
     await userModel.create(values1);
 
-    const user = userModel.getOneByUsername(formData.username);
+    const user = await userModel.getOneByUsername(formData.username);
     const values2 = {
       userId: user.id,
       nickname: formData.nickname,
