@@ -4,7 +4,7 @@ const config = {
     HOST: 'localhost',
     PORT: '3306',
     USER: 'root',
-    PASSWORD: 'zj123456',
+    PASSWORD: '******',
     DATABASE: 'dada_map',
   },
   jwt: {
